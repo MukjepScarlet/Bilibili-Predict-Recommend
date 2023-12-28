@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+<title>
+    {% if kw != '' %}
+        搜索: {{ kw }}, 结果数: {{ total }}
+    {% else %}
+        总览
+    {% endif %}
+</title>
+<style>
+    /* 表头背景颜色粉色 */
+    th {
+        color: #fff;
+        background-color: var(--pink);
+    }
+
+    /* 奇数行背景淡灰色 */
+    tr:nth-child(odd) {
+        background-color: rgb(229, 229, 229);
+    }
+
+    /* 偶数行背景白色 */
+    tr:nth-child(even) {
+        background-color: white;
+    }
+
+    /* 所有框线为等宽的白色 */
+    table {
+        border-collapse: collapse;
+        border: 2px solid white;
+    }
+
+    td,
+    th {
+        border: 2px solid white;
+        padding: 8px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<table id="videoSheet" style="padding-left: 20px; padding-right: 20px; margin: 10px auto;">
+    <thead>
+        <tr>
+            <th class="thumbnail" width="96px">封面</th>
+            <th class="aid headerSort">AV</th>
+            <th class="title headerSort" style="max-width: 36em">标题</th>
+            <th class="pubdate headerSort" style="width: 6em">日期</th>
+            <th class="duration headerSort">时长</th>
+            <th class="view headerSort">播放</th>
+            <th class="danmaku headerSort">弹幕</th>
+            <th class="reply headerSort">回复</th>
+            <th class="favorite headerSort">收藏</th>
+            <th class="coin headerSort">硬币</th>
+            <th class="share headerSort">分享</th>
+            <th class="like headerSort">点赞</th>
+            <th class="his_rank headerSort" style="width: 4em">最高排行</th>
+            <th class="score headerSort" style="width: 4em">用户评分</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Dynamic Videos -->
+        {% for video in data %}
+            <tr>
+                <td>
+                    <a class="imgBox" href={{ video.short_link_v2 }}>
+                        {% if show_thumbnail %}
+                        <img class="video-thumbnail" src={{ video.pic }} alt={{ video.desc }}>
+                        {% endif %}
+                    </a>
+                </td>
+                <td>
+                    <a href={{ video.short_link_v2 }}>{{ video.aid }}</a>
+                </td>
+                <td>{{ video.title }}</td>
+                <td>{{ format_timestamp(video.pubdate) }}</td>
+                <td>{{ format_time(video.duration) }}</td>
+            {% for it in ["view", "danmaku", "reply", "favorite", "coin", "share", "like"] %}
+                <td>{{ format_stat(video.stat[it]) }}</td>
+            {% endfor %}
+                <td>{% if video.stat.his_rank == 0 %}无{% else %}{{ video.stat.his_rank }}{% endif %}</td>
+                <td>
+                    <input type="text" class="score-input" aid={{ video.aid }} maxlength="3" placeholder="--" {% if scores[video.aid] is not none %}value="{{ scores[video.aid] }}"{% endif %}>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot></tfoot>
+</table>
+<div class="pagination">
+    {% if max_page > 1 %}
+        <a {% if current_page == 1 %}class="disabled"{% endif %} href="{{ url_for('sheet', page=current_page-1, **other_params) }}" target="_self">&lt;</a>
+
+        {% if max_page <= 10 %}
+            {% for page_num in range(1, max_page + 1) %}
+                <a {% if page_num == current_page %}class="active"{% endif %} href="{{ url_for('sheet', page=page_num, **other_params) }}" target="_self">{{ page_num }}</a>
+            {% endfor %}
+        {% else %}
+            {% if current_page <= 5 %}
+                {% for page_num in range(1, 9) %}
+                    <a {% if page_num == current_page %}class="active"{% endif %} href="{{ url_for('sheet', page=page_num, **other_params) }}" target="_self">{{ page_num }}</a>
+                {% endfor %}
+                <span>...</span>
+                <a href="{{ url_for('sheet', page=max_page, **other_params) }}" target="_self">{{ max_page }}</a>
+            {% elif current_page > max_page - 5 %}
+                <a href="{{ url_for('sheet', page=1, **other_params) }}" target="_self">1</a>
+                <span>...</span>
+                {% for page_num in range(max_page - 7, max_page + 1) %}
+                    <a {% if page_num == current_page %}class="active"{% endif %} href="{{ url_for('sheet', page=page_num, **other_params) }}" target="_self">{{ page_num }}</a>
+                {% endfor %}
+            {% else %}
+                <a href="{{ url_for('sheet', page=1, **other_params) }}" target="_self">1</a>
+                <span>...</span>
+                {% for page_num in range(current_page - 2, current_page + 3) %}
+                    <a {% if page_num == current_page %}class="active"{% endif %} href="{{ url_for('sheet', page=page_num, **other_params) }}" target="_self">{{ page_num }}</a>
+                {% endfor %}
+                <span>...</span>
+                <a href="{{ url_for('sheet', page=max_page, **other_params) }}" target="_self">{{ max_page }}</a>
+            {% endif %}
+        {% endif %}
+
+        <a {% if current_page == max_page %}class="disabled"{% endif %} href="{{ url_for('sheet', page=current_page+1, **other_params) }}" target="_self">&gt;</a>
+    {% endif %}
+</div>
+<script>
+    document.getElementById("search-input-in").value = "{{kw}}";
+    document.getElementById("sortBy-select").value = "{{sort_by}}";
+    document.getElementById("sortRev-input").checked = JSON.parse("{{sort_rev}}".toLowerCase());
+    for (const score of document.getElementsByClassName("score-input")) {
+        score.addEventListener("input", function(event) {
+            this.value = this.value.replace(/[^0-9.]/g, '');
+
+            if (parseFloat(this.value) > 10)
+                this.value = '10';
+        });
+
+        score.addEventListener("change", function(event) {
+            const newValue = parseFloat(this.value);
+            fetch('/api/scores', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: `{"${score.getAttribute('aid')}":${newValue}}`
+            }).then(r => r.json()).then(data => {
+                if (data.message == 'not logged in') {
+                    alert("请先登录再评分.");
+                    this.value = "";
+                }
+            });
+        });
+    }
+</script>
+{% endblock %}

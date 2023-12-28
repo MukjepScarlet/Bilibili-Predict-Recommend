@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="icon" href="https://www.bilibili.com/favicon.ico" type="image/x-icon">
+    <base target="_blank" />
+    <svg aria-hidden="true" style="position:absolute;width:0px;height:0px;overflow:hidden;" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="widget-up" viewBox="0 0 14 10.666"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 2.5A2.5 2.5 0 0 1 2.5 0h8.334a2.5 2.5 0 0 1 2.5 2.5v5.666a2.5 2.5 0 0 1-2.5 2.5H2.5a2.5 2.5 0 0 1-2.5-2.5ZM2.5 1A1.5 1.5 0 0 0 1 2.5v5.666a1.5 1.5 0 0 0 1.5 1.5h8.334a1.5 1.5 0 0 0 1.5-1.5V2.5a1.5 1.5 0 0 0-1.5-1.5zM3 2.833a.5.5 0 0 1 .5.5v2.5a1 1 0 1 0 2 0v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-4 0v-2.5a.5.5 0 0 1 .5-.5Zm4.667 0a.5.5 0 0 0-.5.5v4a.5.5 0 1 0 1 0v-.667H9.25a1.917 1.917 0 1 0 0-3.833zM9.25 5.666H8.167V3.833H9.25a.917.917 0 1 1 0 1.833z" fill="currentColor" id="path48"></path></symbol>
+        <symbol id="widget-video-danmaku" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 3.25c-1.714 0-3.208.088-4.258.174A1.45 1.45 0 0 0 2.4 4.746C2.323 5.607 2.25 6.75 2.25 8s.073 2.393.15 3.254a1.45 1.45 0 0 0 1.342 1.322c1.05.086 2.544.174 4.258.174s3.208-.088 4.258-.174a1.45 1.45 0 0 0 1.341-1.321c.078-.862.151-2.004.151-3.255s-.073-2.393-.15-3.255a1.45 1.45 0 0 0-1.342-1.321A52.956 52.956 0 0 0 8 3.25Zm-4.34-.823A53.955 53.955 0 0 1 8 2.25c1.747 0 3.27.09 4.34.177a2.45 2.45 0 0 1 2.255 2.228c.08.883.155 2.057.155 3.345 0 1.288-.075 2.462-.155 3.345a2.45 2.45 0 0 1-2.255 2.228c-1.07.087-2.593.177-4.34.177-1.747 0-3.27-.09-4.34-.177a2.45 2.45 0 0 1-2.255-2.229A37.662 37.662 0 0 1 1.25 8c0-1.288.075-2.461.155-3.344A2.45 2.45 0 0 1 3.66 2.427ZM4 6.75a.5.5 0 0 1 .5-.5h.25a.5.5 0 0 1 0 1H4.5a.5.5 0 0 1-.5-.5Zm2 0a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5Zm-.5 2a.5.5 0 0 0 0 1h.25a.5.5 0 0 0 0-1H5.5Zm2 0a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4Z" fill="currentColor"></path></symbol>
+        <symbol id="widget-video-view" viewBox="0 0 24 24"><path d="M12 4.99805C9.48178 4.99805 7.283 5.12616 5.73089 5.25202C4.65221 5.33949 3.81611 6.16352 3.72 7.23254C3.60607 8.4998 3.5 10.171 3.5 11.998C3.5 13.8251 3.60607 15.4963 3.72 16.76355C3.81611 17.83255 4.65221 18.6566 5.73089 18.7441C7.283 18.8699 9.48178 18.998 12 18.998C14.5185 18.998 16.7174 18.8699 18.2696 18.74405C19.3481 18.65655 20.184 17.8328 20.2801 16.76405C20.394 15.4973 20.5 13.82645 20.5 11.998C20.5 10.16965 20.394 8.49877 20.2801 7.23205C20.184 6.1633 19.3481 5.33952 18.2696 5.25205C16.7174 5.12618 14.5185 4.99805 12 4.99805zM5.60965 3.75693C7.19232 3.62859 9.43258 3.49805 12 3.49805C14.5677 3.49805 16.8081 3.62861 18.3908 3.75696C20.1881 3.90272 21.6118 5.29278 21.7741 7.09773C21.8909 8.3969 22 10.11405 22 11.998C22 13.88205 21.8909 15.5992 21.7741 16.8984C21.6118 18.7033 20.1881 20.09335 18.3908 20.23915C16.8081 20.3675 14.5677 20.498 12 20.498C9.43258 20.498 7.19232 20.3675 5.60965 20.2392C3.81206 20.0934 2.38831 18.70295 2.22603 16.8979C2.10918 15.5982 2 13.8808 2 11.998C2 10.1153 2.10918 8.39787 2.22603 7.09823C2.38831 5.29312 3.81206 3.90269 5.60965 3.75693z" fill="currentColor"></path><path d="M14.7138 10.96875C15.50765 11.4271 15.50765 12.573 14.71375 13.0313L11.5362 14.8659C10.74235 15.3242 9.75 14.7513 9.75001 13.8346L9.75001 10.1655C9.75001 9.24881 10.74235 8.67587 11.5362 9.13422L14.7138 10.96875z" fill="currentColor"></path></symbol>
+        <symbol id="widget-user" viewBox="0 0 1024 1024"><path d="M85.312 938.688a341.312 341.312 0 0 1 682.688 0h-85.312a256 256 0 0 0-512 0H85.312z m341.376-384c-141.44 0-256-114.56-256-256s114.56-256 256-256 256 114.56 256 256-114.56 256-256 256z m0-85.376a170.624 170.624 0 1 0 0-341.312 170.624 170.624 0 1 0 0 341.312z m353.408 158.016a341.376 341.376 0 0 1 201.216 311.36H896a256 256 0 0 0-150.912-233.536l35.008-77.824z m-29.312-481.728a234.688 234.688 0 0 1-68.096 450.752V510.464a149.312 149.312 0 0 0 44.416-281.92l23.68-82.944z" fill="#fff"></path></symbol>
+    </svg>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="tabs">
+            <a href="/" class="tab">首页(推荐)</a>
+            <a href="/sheet/" class="tab">总览(搜索)</a>
+            <!-- <a href="/score/" class="tab">打分</a> -->
+            <a href="/predict/" class="tab">视频潜力预测</a>
+            <a href="/visualize/" class="tab">可视化</a>
+        </div>
+        <div class="search-bar">
+            <div class="search-input">
+                <input id="search-input-in" type="text" placeholder="搜索..." onkeypress="event.key === 'Enter' && search()">
+                <button onclick="search()">
+                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.3451 15.2003C16.6377 15.4915 16.4752 15.772 16.1934 16.0632C16.15 16.1279 16.0958 16.1818 16.0525 16.2249C15.7707 16.473 15.4456 16.624 15.1854 16.3652L11.6848 12.8815C10.4709 13.8198 8.97529 14.3267 7.44714 14.3267C3.62134 14.3267 0.5 11.2314 0.5 7.41337C0.5 3.60616 3.6105 0.5 7.44714 0.5C11.2729 0.5 14.3943 3.59538 14.3943 7.41337C14.3943 8.98802 13.8524 10.5087 12.8661 11.7383L16.3451 15.2003ZM2.13647 7.4026C2.13647 10.3146 4.52083 12.6766 7.43624 12.6766C10.3517 12.6766 12.736 10.3146 12.736 7.4026C12.736 4.49058 10.3517 2.1286 7.43624 2.1286C4.50999 2.1286 2.13647 4.50136 2.13647 7.4026Z" fill="currentColor"></path></svg>
+                </button>
+            </div>
+            <div class="sort-container">
+                <span>排序方法</span>
+                <select id="sortBy-select" name="sortBy">
+                    <option value="" selected>无</option>
+                    <option value="aid">AV</option>
+                    <option value="title">标题</option>
+                    <option value="pubdate">发布日期</option>
+                    <option value="duration">时长</option>
+                    <option value="mid">发布者</option>
+                    <option value="view">播放</option>
+                    <option value="danmaku">弹幕</option>
+                    <option value="reply">回复</option>
+                    <option value="favorite">收藏</option>
+                    <option value="coin">硬币</option>
+                    <option value="share">分享</option>
+                    <option value="like">点赞</option>
+                    <option value="score">评分</option>
+                </select>
+                <input type="checkbox" id="sortRev-input" name="sortRev" value="true">
+                <label for="sortRev" onclick="document.getElementById('sortRev-input').click()">逆序</label>
+            </div>
+        </div>
+        <div class="login">
+            {% if session.get('id') is none %}
+                <a class="login-btn" onclick="openLogin()">登录</a>
+            {% else %}
+                <svg style="margin: 0; width: 24px; height: 24px;"><use href="#widget-user"></use></svg>
+                <a class="user-space-btn" href="/userspace">@{{ session.get('id') }}</a>
+                <a class="logout-btn" href="/logout/" style="background: #fff; color: pink; border-radius: 10px; margin: 5px; padding: 5px;" target="_self">登出</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- LOGIN BLOCK -->
+    <div id="overlay">
+        <div id="login-container">
+            <img class="logo-img" alt="B站 b站" style="background-color: var(--pink); border-radius: 12px;" width="162" height="78" src="https://i0.hdslb.com/bfs/archive/c8fd97a40bf79f03e7b76cbc87236f612caef7b2.png">
+            <span id="close-btn" onclick="closeLogin()">×</span>
+            <h2>登录</h2>
+            <input type="text" id="username" placeholder="ID">
+            <input type="password" id="password" placeholder="Password">
+            <button id="login-btn" onclick="tryLogin()">登录</button>
+            <button id="register-btn" onclick="tryRegister()">注册</button>
+        </div>
+    </div>
+    <!-- END LOGIN BLOCK -->
+    
+    {% block body %}{% endblock %}
+
+    <script>
+        function search() {
+            window.location.href = '/sheet/?' + new URLSearchParams({
+                kw: document.getElementById('search-input-in').value,
+                sortBy: document.getElementById('sortBy-select').value,
+                sortRev: document.getElementById('sortRev-input').checked
+            });
+        }
+    </script>
+</body>
+</html>

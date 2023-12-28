@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>主页</title>
+{% endblock %}
+
+{% block body %}
+<div style="display: flex;">
+    {% for title, value in videos.items() %}
+    <div style="margin: 20px auto; border: 2px solid pink; max-width: 40%;">
+        <div style="color: #fff; font-weight: bold; font-size: 28px; background-color: pink; text-align: center; padding: 8px;">{{ title }}</div>
+        <div class="video-grid">
+            <!-- Video Items -->
+            {% for video in value %}
+                <div class="bili-video-card">
+                    <a class="video-preview" href={{ video.short_link_v2 }}>
+                        <img class="video-thumbnail" src={{ video.pic }} alt={{ video.desc }}>
+                        <div class="video-mask">
+                            {% if online_viewers.get(video.aid) %}
+                            <div class="video-stat-top">
+                                <span class="video-stat-item">
+                                    <svg class="video-stat-icon"><use href="#widget-user"></use></svg>
+                                    <span>{{ online_viewers.get(video.aid) }}</span>
+                                </span>
+                            </div>
+                            {% endif %}
+                            <div class="video-stat">
+                                <div>
+                                    <span class="video-stat-item">
+                                        <svg class="video-stat-icon"><use href="#widget-video-view"></use></svg>
+                                        <span>{{ format_stat(video.stat.view) }}</span>
+                                    </span>
+                                    <span class="video-stat-item">
+                                        <svg class="video-stat-icon"><use href="#widget-video-danmaku"></use></svg>
+                                        <span>{{ format_stat(video.stat.danmaku) }}</span>
+                                    </span>
+                                </div>
+                                <span class="video-duration">{{ format_time(video.duration) }}</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="video-title" href={{ video.short_link_v2 }}>
+                        <h3 class="video-title">{{ video.title }}</h3>
+                    </a>
+                    <a class="video-subtitle" href="https://space.bilibili.com/{{ video.owner.mid }}">
+                        <svg class="uploader-icon"><use xlink:href="#widget-up"></use></svg>
+                        <span class="video-author">{{ video.owner.name }}</span>
+                        <span class="video-date">{{ format_timestamp(video.pubdate) }}</span>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>可视化</title>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/v5/echarts.min.js"></script>
+<script type="text/javascript" src="https://assets.pyecharts.org/assets/v5/themes/essos.js"></script>
+<style>
+    html {
+        background-color: var(--bg1);
+    }
+    .visualize-selections {
+        font-size: 16px;
+        padding: 8px;
+        margin-left: 10px;
+        margin-right: 10px;
+        color: white;
+        line-height: 100%;
+        text-align: center;
+        text-decoration: none;
+    }
+</style>
+{% block head_extra %}{% endblock %}
+{% endblock %}
+
+{% block body %}
+<div class="sub-tabs">
+    <div class="sub-tabs-container" style="margin: 0 auto;">
+    {% for k, v in selections.items() %}
+        <a class="visualize-selections" target="_self" {% if k == current %} style="background: var(--bg1); border-top-left-radius: 5px; border-top-right-radius: 5px; color: pink;" href="#" {% else %} href={{ k }} {% endif %}>{{ v }}</a>
+    {% endfor %}
+    </div>
+</div>
+{% block content %}{% endblock %}
+
+{% endblock %}

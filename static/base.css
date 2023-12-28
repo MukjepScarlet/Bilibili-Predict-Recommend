@@ -1,0 +1,147 @@
+:root {
+    --bg1: #fbf9ec;
+    --text1: #18191c;
+    --text3: #9499a0;
+    --pink: #ff69b4;
+    --purple: rgb(112, 48, 160);
+    --title-font-size: 15px;
+    --title-line-height: 22px;
+    --subtitle-font-size: 13px;
+    --subtitle-line-height: 16px;
+    --icon-size: 18px;
+}
+
+svg {
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--pink);
+    transition: color 0.2s linear;
+}
+
+img {
+    border-style: none;
+    vertical-align: middle;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: pink;
+    padding: 10px;
+    display: flex;
+    /* justify-content: center; */
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.tabs {
+    display: flex;
+}
+
+.tab {
+    font-size: 16px;
+    margin-right: 16px;
+    color: white;
+    text-decoration: none;
+}
+
+.search-bar {
+    max-width: 40%;
+    display: flex;
+}
+
+.search-input {
+    position: relative;
+    /* display: inline-block; */
+    display: flex;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: background-color 0.3s ease;
+    overflow: hidden;
+}
+
+.search-input:hover,
+.search-input input:focus {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.search-input:hover::before,
+.search-input:hover::after {
+    background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+}
+
+.search-input input {
+    border: none;
+    border-radius: 7.5px;
+    width: calc(100% - 47px);
+    outline: none;
+    font-size: 16px;
+    color: black;
+    background-color: transparent;
+    padding: 5px;
+}
+
+.search-input button {
+    margin-right: auto;
+    padding: 5px;
+    background: transparent;
+}
+
+.sort-container {
+    align-items: center;
+    display: flex;
+}
+
+.sort-container select {
+    border: none;
+    border-radius: 10px;
+    height: 75%;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.sort-container span,
+.sort-container label {
+    padding: 0 5px;
+    text-align: center;
+    line-height: 100%;
+}
+
+input {
+    border-width: 0;
+    outline: none;
+    padding: 5px;
+}
+
+button {
+    border-width: 0;
+    outline: none;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.login {
+    text-decoration: none;
+    color: white;
+}
+
+.sub-tabs {
+    display: flex;
+    height: 32px;
+    background: pink;
+    border-top: 2px solid var(--bg1);
+    border-bottom: 2px solid var(--bg1);
+    align-items: center;
+}
