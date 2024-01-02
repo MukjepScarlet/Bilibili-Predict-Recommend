@@ -24,7 +24,7 @@ Python 3 需要添加到 PATH. 库可以直接使用 `pip` 命令安装.
 
 在 [GitHub - winutils](https://github.com/cdarlint/winutils/tree/master) 找到支持的最新的 Hadoop 版本 (测试使用 3.3.5)
 
-下载之后去 [Hadoop 官网] (https://archive.apache.org/dist/hadoop/common/) 下载对应的版本, 比如 [hadoop-3.3.5.tar.gz](https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5.tar.gz)
+下载之后去 [Hadoop 官网](https://archive.apache.org/dist/hadoop/common/) 下载对应的版本, 比如 [hadoop-3.3.5.tar.gz](https://archive.apache.org/dist/hadoop/common/hadoop-3.3.5/hadoop-3.3.5.tar.gz)
 
 解压要求同 Java 的安装要求. 之后添加相应的环境变量, 并修改配置文件. 注意更改路径. 将上方 `winutils` 中的 `/bin` 目录覆盖掉 Hadoop 解压后的目录.
 
@@ -85,5 +85,7 @@ Python 3 需要添加到 PATH. 库可以直接使用 `pip` 命令安装.
 - 使用 session 而非 cookie 来存储登录状态, 同时也没有测试多客户端访问.
 
 - 没有自动更新数据集的功能, 这个功能爬取数据量比较大, 最好不要一起运行.
+
+- 同样, 可视化其实也是静态数据.
 
 - 推荐和预测功能会同时启动 Java, 不确定会不会造成僵尸进程.
